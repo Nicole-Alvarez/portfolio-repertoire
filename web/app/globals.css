@@ -41,3 +41,118 @@ h3 {
   background: color-mix(in srgb, var(--gold) 45%, transparent);
   color: var(--cream);
 }
+
+@keyframes intro-circle-grow {
+  0% {
+    box-shadow: 0 0 0 0 #000;
+  }
+  100% {
+    box-shadow: 0 0 0 230vmax #000;
+  }
+}
+
+@keyframes intro-overlay-fade {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-nav-slide-down {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes intro-top-part-slide-up {
+  0% {
+    transform: translateY(90px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes intro-content-details-slide-up {
+  0% {
+    transform: translateY(120px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes intro-hero-image-slide-left {
+  0% {
+    transform: translateX(120px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.intro-overlay {
+  background:
+    radial-gradient(circle at top, #7b1d3c33, transparent 46%),
+    radial-gradient(circle at 80% 20%, #cfac6822, transparent 34%),
+    linear-gradient(180deg, #2f0714 0%, #12080d 55%, #1b0b12 100%);
+}
+
+.intro-circle {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 9999px;
+  background: #000;
+  animation: intro-circle-grow 1.9s linear 0.38s forwards;
+  will-change: box-shadow;
+}
+
+.intro-nav-enter {
+  animation: intro-nav-slide-down 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.intro-nav-pre {
+  opacity: 0;
+  transform: translateY(-120%);
+}
+
+.intro-top-part-enter {
+  opacity: 0;
+  animation: intro-top-part-slide-up 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) 2.9s forwards;
+}
+
+.intro-content-details-enter {
+  animation: intro-content-details-slide-up 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.intro-content-details-pre {
+  opacity: 0;
+  transform: translateY(120px);
+}
+
+.intro-hero-image-pre {
+  opacity: 0;
+  transform: translateX(120px);
+}
+
+.intro-hero-image-enter {
+  animation: intro-hero-image-slide-left 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}

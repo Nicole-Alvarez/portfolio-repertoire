@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import AppParallaxProvider from "./parallax-provider";
-// @ts-ignore
 import "./globals.css";
 
 const manrope = Manrope({

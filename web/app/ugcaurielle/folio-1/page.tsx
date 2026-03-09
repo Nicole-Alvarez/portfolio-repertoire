@@ -28,6 +28,10 @@ function mixHex(start: string, end: string, t: number) {
 export default function FoliOnePage() {
   const [scrollY, setScrollY] = useState(0);
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
+  const [showIntro, setShowIntro] = useState(true);
+  const [startGlow, setStartGlow] = useState(false);
+  const [startHeroImage, setStartHeroImage] = useState(false);
+  const [startHeroText, setStartHeroText] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -35,6 +39,29 @@ export default function FoliOnePage() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowIntro(false), 2800);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (showIntro) return;
+    const timer = window.setTimeout(() => setStartGlow(true), 900);
+    return () => window.clearTimeout(timer);
+  }, [showIntro]);
+
+  useEffect(() => {
+    if (showIntro) return;
+    const timer = window.setTimeout(() => setStartHeroImage(true), 500);
+    return () => window.clearTimeout(timer);
+  }, [showIntro]);
+
+  useEffect(() => {
+    if (!startHeroImage) return;
+    const timer = window.setTimeout(() => setStartHeroText(true), 220);
+    return () => window.clearTimeout(timer);
+  }, [startHeroImage]);
 
   const navItems = [
     { label: "About", href: "#about" },
@@ -97,9 +124,7 @@ export default function FoliOnePage() {
     "UGC Project Manager",
     "Creative Director",
     "AD Scriptwriter",
-  ];
-  const waveProgress = Math.min(scrollY / 520, 1);
-  const waveColor = mixHex("#000000", "#2f0714", waveProgress);
+  ]; 
 
   return (
     <div
@@ -107,6 +132,14 @@ export default function FoliOnePage() {
       onMouseMove={(event) => setCursor({ x: event.clientX, y: event.clientY })}
       onMouseLeave={() => setCursor({ x: -9999, y: -9999 })}
     >
+      {showIntro && (
+        <div
+          aria-hidden
+          className="intro-overlay pointer-events-none fixed inset-0 z-[90]"
+        >
+          <div className="intro-circle" />
+        </div>
+      )}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-20 transition-opacity duration-200"
@@ -116,14 +149,14 @@ export default function FoliOnePage() {
       />
       <Parallax
         translateY={[-16, 40]}
-        className="pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-[#cfac6840] blur-3xl"
+        className={`${startGlow ? "opacity-100" : "opacity-0"} pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-[#cfac6840] blur-3xl transition-opacity duration-700`}
       />
       <Parallax
         translateY={[28, -30]}
         className="pointer-events-none absolute -right-28 top-[36rem] h-96 w-96 rounded-full bg-[#7d294540] blur-3xl"
       />
 
-      <header className="sticky top-0 z-30 border-b border-[#cfac6838] bg-[#2a0612cc] backdrop-blur-xl">
+      <header className={`${showIntro ? "intro-nav-pre" : "intro-nav-enter"} sticky top-0 z-[100] border-b border-[#cfac6838] bg-[#2a0612cc] backdrop-blur-xl`}>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
           <a
             href="#top"
@@ -157,7 +190,7 @@ export default function FoliOnePage() {
         >
           <div
             aria-hidden
-            className="border rounded-md pointer-events-none relative z-10 hidden h-[440px] w-[280px] min-w-[280px] max-w-[480px] md:block"
+            className={`${startHeroImage ? "opacity-100 translate-x-0" : "opacity-0 translate-x-48"} border rounded-md pointer-events-none relative z-10 hidden h-[440px] w-[280px] min-w-[280px] max-w-[480px] transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] md:block`}
           >
             <Image
               src="/creativeportfolio-images/ae4ea5e6ba751cc78000fb16e478586c.png"
@@ -168,13 +201,22 @@ export default function FoliOnePage() {
             />
           </div>
           <div className="z-0">
-            <p className="mb-5 text-xs uppercase tracking-[0.25em] text-[#ebd2a1]">
+            <p
+              className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} mb-5 text-xs uppercase tracking-[0.25em] text-[#ebd2a1] transition-all duration-500`}
+              style={{ transitionDelay: "0ms" }}
+            >
               Aurielle Creative Portfolio
             </p>
-            <h1 className="max-w-5xl font-['var(--font-cormorant)'] text-7xl leading-[0.92] tracking-tight text-[#f8efe4] sm:text-8xl md:text-9xl">
+            <h1
+              className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} max-w-5xl font-['var(--font-cormorant)'] text-7xl leading-[0.92] tracking-tight text-[#f8efe4] transition-all duration-500 sm:text-8xl md:text-9xl`}
+              style={{ transitionDelay: "120ms" }}
+            >
               Creativity is my craft.
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-[#cab2bc]">
+            <p
+              className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} mt-6 max-w-xl text-base leading-7 text-[#cab2bc] transition-all duration-500`}
+              style={{ transitionDelay: "240ms" }}
+            >
               UGC Creator, UGC Project Manager, Creative Director, and AD
               Scriptwriter focused on content that is both strategic and
               visually memorable.
@@ -182,35 +224,27 @@ export default function FoliOnePage() {
             <a
               href="#about"
               onClick={handleSmoothScroll("#about")}
-              className="mt-8 inline-flex rounded-full border border-[#cfac6850] bg-[#ffffff0a] px-5 py-2.5 text-sm text-[#f4e7d4] transition hover:-translate-y-0.5 hover:bg-[#cfac6828]"
+              className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} mt-8 inline-flex rounded-full border border-[#cfac6850] bg-[#ffffff0a] px-5 py-2.5 text-sm text-[#f4e7d4] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#cfac6828]`}
+              style={{ transitionDelay: "360ms" }}
             >
               Explore Portfolio
             </a>
           </div>
         </Parallax>
-        <Parallax
-          translateY={[84, 0]}
-          className="pointer-events-none absolute inset-x-0 -bottom-[92vh] h-[120vh]"
-        >
-          <div style={{ opacity: 0.35 + waveProgress * 0.65 }}>
-            <svg
-              viewBox="0 0 1440 260"
-              className="h-36 w-full md:h-44"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0,180 C190,250 370,80 560,132 C760,186 950,274 1140,180 C1275,114 1360,118 1440,142 L1440,260 L0,260 Z"
-                fill={waveColor}
-              />
-            </svg>
-            <div className="h-full" style={{ backgroundColor: waveColor }} />
-          </div>
-        </Parallax>
       </section>
 
-      <main className="relative z-20 -mt-20 rounded-t-[2.25rem] border-t border-[#cfac6840] bg-[radial-gradient(circle_at_top,_#7b1d3c33,_transparent_46%),radial-gradient(circle_at_80%_20%,_#cfac6822,_transparent_34%),linear-gradient(180deg,_#2f0714_0%,_#12080d_55%,_#1b0b12_100%)] md:-mt-24">
-        <div id="about" className="mx-auto max-w-6xl px-6 pb-24 pt-20">
-          <section className="grid gap-8 rounded-3xl border border-[#cfac6840] bg-[#4f10232e] p-8 shadow-[0_20px_80px_-45px_rgba(0,0,0,0.95)] sm:grid-cols-[1.2fr_0.8fr] sm:p-12">
+      <main
+        id="content-details"
+        className={`${showIntro ? "intro-content-details-pre" : "intro-content-details-enter"} relative z-20 -mt-20 rounded-t-[2.25rem] border-t border-[#cfac6840] bg-[radial-gradient(circle_at_top,_#7b1d3c33,_transparent_46%),radial-gradient(circle_at_80%_20%,_#cfac6822,_transparent_34%),linear-gradient(180deg,_#2f0714_0%,_#12080d_55%,_#1b0b12_100%)] md:-mt-24`}
+      >
+        <div
+          id="top-part"
+          className="intro-top-part-enter mx-auto max-w-6xl px-6 pb-24 pt-20"
+        >
+          <section
+            id="about"
+            className="grid gap-8 rounded-3xl border border-[#cfac6840] bg-[#4f10232e] p-8 shadow-[0_20px_80px_-45px_rgba(0,0,0,0.95)] sm:grid-cols-[1.2fr_0.8fr] sm:p-12"
+          >
             <div>
               <p className="mb-4 inline-block rounded-full border border-[#ebd2a166] bg-[#ebd2a114] px-4 py-1 text-xs tracking-[0.2em] text-[#ebd2a1]">
                 CREATIVE PORTFOLIO
