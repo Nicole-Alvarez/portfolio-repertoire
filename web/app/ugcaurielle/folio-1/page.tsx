@@ -129,7 +129,7 @@ export default function FoliOnePage() {
               across wellness, beauty, pet, and lifestyle niches.
             </p>
           </div>
-          <div className="flex flex-row gap-10 rounded-2xl border border-[#cfac6844] bg-[#12080dcc] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+          <div className="flex flex-row gap-6 rounded-2xl border border-[#cfac6844] bg-[#12080dcc] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
             <div className="relative mb-5 h-[240px] aspect-[4/5] overflow-hidden rounded-xl border border-[#cfac6855]">
               <Image
                 src="/creativeportfolio-images/00ef042d8f6d734a73c8d8379a6b1733.jpg"
