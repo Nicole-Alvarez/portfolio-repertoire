@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import AppParallaxProvider from "./parallax-provider";
+// @ts-ignore
 import "./globals.css";
 
 const manrope = Manrope({
@@ -31,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} ${cormorant.variable} ${manropeMono.variable} antialiased`}>
-        {children}
+        <AppParallaxProvider>{children}</AppParallaxProvider>
       </body>
     </html>
   );
