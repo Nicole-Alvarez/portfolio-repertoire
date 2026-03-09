@@ -6,6 +6,7 @@ import Image from "next/image";
 
 export default function FoliOnePage() {
   const [scrollY, setScrollY] = useState(0);
+  const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -71,7 +72,18 @@ export default function FoliOnePage() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top,_#7b1d3c33,_transparent_46%),radial-gradient(circle_at_80%_20%,_#cfac6822,_transparent_34%),linear-gradient(180deg,_#2f0714_0%,_#12080d_55%,_#1b0b12_100%)] text-[#f8efe4]">
+    <div
+      className="relative min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top,_#7b1d3c33,_transparent_46%),radial-gradient(circle_at_80%_20%,_#cfac6822,_transparent_34%),linear-gradient(180deg,_#2f0714_0%,_#12080d_55%,_#1b0b12_100%)] text-[#f8efe4]"
+      onMouseMove={(event) => setCursor({ x: event.clientX, y: event.clientY })}
+      onMouseLeave={() => setCursor({ x: -9999, y: -9999 })}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-20 transition-opacity duration-200"
+        style={{
+          background: `radial-gradient(360px circle at ${cursor.x}px ${cursor.y}px, rgba(235, 210, 161, 0.07), rgba(235, 210, 161, 0.02) 42%, transparent 78%)`,
+        }}
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-[#cfac6840] blur-3xl"
