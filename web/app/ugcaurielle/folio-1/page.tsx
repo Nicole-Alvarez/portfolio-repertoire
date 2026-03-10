@@ -192,7 +192,7 @@ export default function FoliOnePage() {
         >
           <div
             aria-hidden
-            className={`${startHeroImage ? "opacity-100 translate-x-0" : "opacity-0 translate-x-48"} border rounded-md pointer-events-none relative z-10 hidden h-[440px] w-[280px] min-w-[280px] max-w-[480px] transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] md:block`}
+            className={`${startHeroImage ? "opacity-100 translate-x-0" : "opacity-0 translate-x-48"} border-b border-r rounded-md pointer-events-none relative z-10 hidden h-[440px] w-[280px] min-w-[280px] max-w-[480px] transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] md:block`}
           >
             <Image
               src="/creativeportfolio-images/ae4ea5e6ba751cc78000fb16e478586c.png"
