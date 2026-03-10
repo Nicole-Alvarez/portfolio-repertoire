@@ -156,7 +156,9 @@ export default function FoliOnePage() {
         className="pointer-events-none absolute -right-28 top-[36rem] h-96 w-96 rounded-full bg-[#7d294540] blur-3xl"
       />
 
-      <header className={`${showIntro ? "intro-nav-pre" : "intro-nav-enter"} sticky top-0 z-[100] border-b border-[#cfac6838] bg-[#2a0612cc] backdrop-blur-xl`}>
+      <header
+        className={`${showIntro ? "intro-nav-pre" : "intro-nav-enter"} sticky top-0 z-[100] border-b border-[#cfac6838] bg-[#2a0612cc] backdrop-blur-xl`}
+      >
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
           <a
             href="#top"
@@ -223,7 +225,7 @@ export default function FoliOnePage() {
             </p>
             <a
               href="#about"
-              onClick={handleSmoothScroll("#about")}
+              onClick={handleSmoothScroll("#top-part")}
               className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} mt-8 inline-flex rounded-full border border-[#cfac6850] bg-[#ffffff0a] px-5 py-2.5 text-sm text-[#f4e7d4] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#cfac6828]`}
               style={{ transitionDelay: "360ms" }}
             >
