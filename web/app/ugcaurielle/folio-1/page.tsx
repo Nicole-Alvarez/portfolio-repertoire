@@ -64,7 +64,7 @@ export default function FoliOnePage() {
   }, [startHeroImage]);
 
   const navItems = [
-    { label: "About", href: "#about" },
+    { label: "About", href: "#top-part" },
     { label: "Services", href: "#services" },
     { label: "Client List", href: "#clients" },
     { label: "Testimonials", href: "#testimonials" },
