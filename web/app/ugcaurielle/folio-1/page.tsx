@@ -26,6 +26,7 @@ function mixHex(start: string, end: string, t: number) {
 }
 
 export default function FoliOnePage() {
+  const HERO_PORTRAIT_ANIMATION_MS = 1350;
   const [scrollY, setScrollY] = useState(0);
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
   const [showIntro, setShowIntro] = useState(true);
@@ -59,7 +60,10 @@ export default function FoliOnePage() {
 
   useEffect(() => {
     if (!startHeroImage) return;
-    const timer = window.setTimeout(() => setStartHeroText(true), 220);
+    const timer = window.setTimeout(
+      () => setStartHeroText(true),
+      HERO_PORTRAIT_ANIMATION_MS + 80,
+    );
     return () => window.clearTimeout(timer);
   }, [startHeroImage]);
 
@@ -188,11 +192,13 @@ export default function FoliOnePage() {
       >
         <Parallax
           translateY={[-100, 100]}
-          className="relative z-10 mx-auto flex w-full max-w-6xl flex-row items-center gap-10 px-6"
+          className="relative z-10 mx-auto flex w-full max-w-6xl flex-row items-center gap-10 px-6 md:min-h-[480px]"
+          id="hero-parallax"
         >
           <div
+            id="hero-portrait-image"
             aria-hidden
-            className={`${startHeroImage ? "opacity-100 translate-x-0" : "opacity-0 translate-x-48"} border-b border-r rounded-md pointer-events-none relative z-10 hidden h-[440px] w-[280px] min-w-[280px] max-w-[480px] transition-all duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] md:block`}
+            className={`${startHeroImage ? "hero-portrait-enter" : "hero-portrait-pre"} border-b border-r rounded-md pointer-events-none absolute bottom-0 right-0 z-10 hidden h-[470px] w-[280px] min-w-[280px] md:block`}
           >
             <Image
               src="/creativeportfolio-images/ae4ea5e6ba751cc78000fb16e478586c.png"
@@ -202,7 +208,7 @@ export default function FoliOnePage() {
               sizes="(max-width: 1024px) 32vw, 420px"
             />
           </div>
-          <div className="z-0">
+          <div className="z-0 md:pl-[320px]" id="hero-descripions">
             <p
               className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} mb-5 text-xs uppercase tracking-[0.25em] text-[#ebd2a1] transition-all duration-500`}
               style={{ transitionDelay: "0ms" }}
@@ -212,6 +218,7 @@ export default function FoliOnePage() {
             <h1
               className={`${startHeroText ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} max-w-5xl font-['var(--font-cormorant)'] text-7xl leading-[0.92] tracking-tight text-[#f8efe4] transition-all duration-500 sm:text-8xl md:text-9xl`}
               style={{ transitionDelay: "120ms" }}
+              id="hero-descripions-main-details-"
             >
               Creativity is my craft.
             </h1>

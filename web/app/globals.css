@@ -148,6 +148,39 @@ h3 {
   transform: translateY(120px);
 }
 
+.hero-portrait-pre {
+  opacity: 0;
+  left: calc(100% - 280px);
+  right: auto;
+  bottom: -120px;
+}
+
+@keyframes hero-portrait-rise-then-left {
+  0% {
+    left: calc(100% - 280px);
+    bottom: -120px;
+    opacity: 0;
+  }
+  38% {
+    left: calc(100% - 280px);
+    bottom: 0;
+    opacity: 1;
+  }
+  100% {
+    left: 0;
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+.hero-portrait-enter {
+  left: calc(100% - 280px);
+  right: auto;
+  bottom: -120px;
+  opacity: 0;
+  animation: hero-portrait-rise-then-left 1.35s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
 .intro-hero-image-pre {
   opacity: 0;
   transform: translateX(120px);
