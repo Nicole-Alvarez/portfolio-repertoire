@@ -33,6 +33,7 @@ export default function FoliOnePage() {
   const [startGlow, setStartGlow] = useState(false);
   const [startHeroImage, setStartHeroImage] = useState(false);
   const [startHeroText, setStartHeroText] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -77,6 +78,7 @@ export default function FoliOnePage() {
 
   const handleSmoothScroll = (targetId: string) => (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    setMobileMenuOpen(false);
     const section = document.querySelector(targetId);
     if (section instanceof HTMLElement) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -148,7 +150,7 @@ export default function FoliOnePage() {
         aria-hidden
         className="pointer-events-none fixed inset-0 z-20 transition-opacity duration-200"
         style={{
-          background: `radial-gradient(360px circle at ${cursor.x}px ${cursor.y}px, rgba(235, 210, 161, 0.1), rgba(235, 210, 161, 0.03) 42%, transparent 78%)`,
+          background: `radial-gradient(360px circle at ${cursor.x}px ${cursor.y}px, rgba(235, 210, 161, 0.22), rgba(235, 210, 161, 0.1) 42%, transparent 78%)`,
         }}
       />
       <Parallax
@@ -156,8 +158,8 @@ export default function FoliOnePage() {
         className={`${startGlow ? "opacity-100" : "opacity-0"} pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-[#cfac6840] blur-3xl transition-opacity duration-700`}
       />
       <Parallax
-        translateY={[28, -30]}
-        className="pointer-events-none absolute -right-28 top-[36rem] h-96 w-96 rounded-full bg-[#7d294540] blur-3xl"
+        translateY={[-16, 40]}
+        className={`${startGlow ? "opacity-100" : "opacity-0"} pointer-events-none absolute right-8 top-44 z-10 hidden h-[28rem] w-[28rem] rounded-full bg-[#7d29457a] blur-3xl transition-opacity duration-700 md:block`}
       />
 
       <header
@@ -171,7 +173,28 @@ export default function FoliOnePage() {
           >
             Aurielle
           </a>
-          <div className="flex flex-wrap justify-end gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#cfac6850] bg-[#ffffff08] text-[#f4e7d4] md:hidden"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-menu"
+          >
+            <span className="sr-only">Toggle menu</span>
+            <span className="relative block h-3.5 w-5">
+              <span
+                className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition ${mobileMenuOpen ? "translate-y-[7px] rotate-45" : ""}`}
+              />
+              <span
+                className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition ${mobileMenuOpen ? "opacity-0" : "opacity-100"}`}
+              />
+              <span
+                className={`absolute left-0 top-[14px] h-0.5 w-5 bg-current transition ${mobileMenuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+              />
+            </span>
+          </button>
+          <div className="hidden flex-wrap justify-end gap-2 sm:gap-3 md:flex">
             {navItems.map((item) => (
               <a
                 key={item.label}
@@ -184,6 +207,23 @@ export default function FoliOnePage() {
             ))}
           </div>
         </nav>
+        <div
+          id="mobile-nav-menu"
+          className={`${mobileMenuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"} overflow-hidden border-t border-[#cfac6838] px-6 transition-all duration-300 md:hidden`}
+        >
+          <div className="flex flex-col gap-2 py-3">
+            {navItems.map((item) => (
+              <a
+                key={`mobile-${item.label}`}
+                href={item.href}
+                onClick={handleSmoothScroll(item.href)}
+                className="rounded-full border border-[#cfac6850] bg-[#ffffff08] px-4 py-2 text-sm text-[#f4e7d4] transition hover:bg-[#cfac682c] hover:text-[#ebd2a1]"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
       </header>
 
       <section
