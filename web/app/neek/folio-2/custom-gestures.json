@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-28",
+  "description": "Custom gesture definitions for neek/folio-2 hand-ball interaction.",
+  "globals": {
+    "maxHands": 2,
+    "tipColliderPoints": [4, 8, 12, 16, 20],
+    "pinch": {
+      "acquireRatio": 0.72,
+      "releaseRatio": 0.9,
+      "nearBallRadiusMultiplier": 2.15,
+      "nearBallRadiusWhileDraggingMultiplier": 2.5
+    }
+  },
+  "gestures": [
+    {
+      "id": "pinch_grab",
+      "label": "Pinch Grab",
+      "enabled": true,
+      "requiredLandmarks": [4, 8],
+      "type": "pinch",
+      "conditions": {
+        "requiresBallProximity": true,
+        "allowsThumbMiddleFallback": true,
+        "allowsThumbRingFallback": true
+      },
+      "action": {
+        "kind": "drag_ball",
+        "followTarget": "pinch_center"
+      }
+    },
+    {
+      "id": "depth_push_pull",
+      "label": "Depth Push/Pull",
+      "enabled": true,
+      "requiredLandmarks": [4, 8, 5, 17],
+      "type": "depth",
+      "conditions": {
+        "requiresActiveGrab": true
+      },
+      "action": {
+        "kind": "scale_ball",
+        "minScale": 0.72,
+        "maxScale": 1.7
+      }
+    },
+    {
+      "id": "hand_cover",
+      "label": "Hand Cover",
+      "enabled": true,
+      "requiredLandmarks": [4, 8, 12, 16, 20],
+      "type": "coverage",
+      "conditions": {
+        "minTipContacts": 4
+      },
+      "action": {
+        "kind": "set_ball_opacity",
+        "opacityWhenCovered": 0.45
+      }
+    }
+  ]
+}
